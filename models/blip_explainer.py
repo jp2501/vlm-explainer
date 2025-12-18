@@ -5,7 +5,7 @@ import torch
 from torch import nn
 from PIL import Image
 from transformers import BlipProcessor, BlipForConditionalGeneration
-
+import warnings
 
 class BlipExplainer:
     def __init__(self, model_name: str = "Salesforce/blip-image-captioning-base", device: Optional[str] = None):
@@ -14,7 +14,16 @@ class BlipExplainer:
         self.device = device
 
         # Use fast image processor to avoid the "slow image processor" warning
-        self.processor = BlipProcessor.from_pretrained(model_name, use_fast=True)
+        self.processor = None
+        try:
+            self.processor = BlipProcessor.from_pretrained(model_name, use_fast=True)
+        except Exception:
+            warnings.filterwarnings(
+                "ignore",
+                message=r"Using a slow image processor as `use_fast` is unset.*",
+                category=UserWarning,
+            )
+            self.processor = BlipProcessor.from_pretrained(model_name, use_fast=False)
         self.model = BlipForConditionalGeneration.from_pretrained(model_name).to(self.device)
         self.model.eval()
 
