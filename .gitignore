@@ -1,0 +1,35 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.egg-info/
+dist/
+build/
+
+# Envs
+.venv/
+venv/
+env/
+ENV/
+*.conda
+.ipynb_checkpoints/
+
+# Streamlit
+.streamlit/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Outputs
+*.mp4
+*.gif
+*.png
+*.jpg
+*.jpeg
+*.log
+
+# Temp
+tmp/
+temp/
